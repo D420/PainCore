@@ -229,6 +229,9 @@ class WorldSession
         std::string const& GetPlayerName() const;
         std::string GetPlayerInfo() const;
 
+        uint32 GetCurrentVendor() const { return m_CurrentVendor; }
+        void SetCurrentVendor(uint32 entry) { m_CurrentVendor = entry; }
+
         uint32 GetGuidLow() const;
         void SetSecurity(AccountTypes security) { _security = security; }
         std::string const& GetRemoteAddress() { return m_Address; }
@@ -269,7 +272,7 @@ class WorldSession
 
         void SendTrainerList(uint64 guid);
         void SendTrainerList(uint64 guid, std::string const& strTitle);
-        void SendListInventory(uint64 guid);
+        void SendListInventory(uint64 guid, uint32 vendorEntry = 0);
         void SendShowBank(uint64 guid);
         void SendTabardVendorActivate(uint64 guid);
         void SendSpiritResurrect();
@@ -968,6 +971,7 @@ class WorldSession
         Player* _player;
         WorldSocket* m_Socket;
         std::string m_Address;
+        uint32 m_CurrentVendor;
 
         AccountTypes _security;
         uint32 _accountId;
