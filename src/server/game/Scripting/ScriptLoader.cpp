@@ -1393,6 +1393,7 @@ void AddSC_CPWS_Transmogrification();
 void AddSC_reset_all();
 void AddSC_PvPTitles();
 void AddSC_global_chat();
+void AddSC_gm_login();
 #endif
 
 void AddCustomScripts()
@@ -1404,5 +1405,6 @@ void AddCustomScripts()
 	AddSC_reset_all();
     AddSC_PvPTitles();
     AddSC_global_chat();
+	AddSC_gm_login();
 #endif
 }

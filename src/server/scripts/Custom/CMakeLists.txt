@@ -17,6 +17,7 @@ set(scripts_STAT_SRCS
 	Custom/reset_all.cpp
 	Custom/PvPTitles.cpp
 	Custom/global_chat.cpp
+	Custom/anuncio_gm.cpp
 )
 
 message("  -> Prepared: Custom")
