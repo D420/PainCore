@@ -2073,6 +2073,125 @@ bool Player::BuildEnumData(PreparedQueryResult result, WorldPacket* data)
     return true;
 }
 
+bool Player::CreateFakeCharacter(WorldPacket* data)
+{
+    uint32 guid = 0;                                          // GUID
+	std::string charName;
+    uint32 charRace;
+    uint32 charClass;
+    uint32 charGender;
+    uint32 charLevel;
+    uint32 playerBytes1;
+    uint32 playerBytes2;
+
+    *data << uint64(MAKE_NEW_GUID(guid, 0, HIGHGUID_PLAYER)); // don't touch it
+	switch(sWorld->getIntConfig(CONFIG_RECOMMENDED_FACTION_SIDE))
+    {
+    case 1: // alliance
+    {
+        charName = "Alliance Recommended";
+        charRace = 4;                // race   : night elf
+        charClass = 1;               // class  : warrior
+        charGender = 1;              // gender : female
+        charLevel = 1;               // level  : 1
+        playerBytes1 = 33556231;     // used to create display column 1
+        playerBytes2 = 33554437;     // used to create display column 2
+    }
+    break;
+    case 2:
+    {
+        charName = "Horde Recommended";
+        charRace = 10;               // race   : blood elf
+        charClass = 4;               // class  : rogue
+        charGender = 1;              // gender : female
+        charLevel = 1;               // level  : 1
+        playerBytes1 = 17106692;     // used to create display column 1
+        playerBytes2 = 33554436;     // used to create display column 2
+    }
+    break;
+	default:
+	{
+        charName = "Horde Recommended";
+        charRace = 10;               // race   : blood elf
+        charClass = 4;               // class  : rogue
+        charGender = 1;              // gender : female
+        charLevel = 1;               // level  : 1
+        playerBytes1 = 17106692;     // used to create display column 1
+        playerBytes2 = 33554436;     // used to create display column 2
+	}
+	break;
+    }
+
+	*data << charName.c_str();                                // name
+    *data << uint8(charRace);                                 // race
+    *data << uint8(charClass);                                // class
+    *data << uint8(charGender);                               // gender
+
+    *data << uint8(playerBytes1);                             // skin
+    *data << uint8(playerBytes1 >> 8);                        // face
+    *data << uint8(playerBytes1 >> 16);                       // hair style
+    *data << uint8(playerBytes1 >> 24);                       // hair color
+
+    *data << uint8(playerBytes2 & 0xFF);                      // facial hair
+
+    *data << uint8(charLevel);                                // level
+    *data << uint32(876);                                     // zone
+    *data << uint32(1);                                       // map
+
+    *data << 0;                                               // x
+    *data << 0;                                               // y
+    *data << 0;                                               // z
+
+    *data << uint32(0);                                       // guild id
+
+    *data << uint32(CHARACTER_FLAG_LOCKED_BY_BILLING);        // character flags
+
+    *data << uint32(CHAR_CUSTOMIZE_FLAG_NONE);                // customize flags
+
+    *data << uint8(0 & AT_LOGIN_FIRST ? 1 : 0);               // First login
+
+    *data << uint32(0);                                       // pet display id
+    *data << uint32(0);                                       // pet level
+    *data << uint32(0);                                       // pet family
+
+	std::string equipmentTemplate = "0 0 0 0 0 0 0 0 60000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 60001 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ";
+
+	Tokenizer equipment(equipmentTemplate.c_str(), ' ');
+    for (uint8 slot = 0; slot < INVENTORY_SLOT_BAG_END; ++slot)
+    {
+        uint32 visualBase = slot * 2;
+        uint32 itemId = GetUInt32ValueFromArray(equipment, visualBase);
+        ItemTemplate const* proto = sObjectMgr->GetItemTemplate(itemId);
+        if (!proto)
+        {
+            *data << uint32(0);
+            *data << uint8(0);
+            *data << uint32(0);
+            continue;
+        }
+
+        SpellItemEnchantmentEntry const* enchant = NULL;
+
+        uint32 enchants = GetUInt32ValueFromArray(equipment, visualBase + 1);
+        for (uint8 enchantSlot = PERM_ENCHANTMENT_SLOT; enchantSlot <= TEMP_ENCHANTMENT_SLOT; ++enchantSlot)
+        {
+            uint32 enchantId = 0x0000FFFF & (enchants >> enchantSlot*16);
+            if (!enchantId)
+                continue;
+
+            enchant = sSpellItemEnchantmentStore.LookupEntry(enchantId);
+            if (enchant)
+                break;
+        }
+
+        *data << uint32(proto->DisplayInfoID);
+        *data << uint8(proto->InventoryType);
+        *data << uint32(enchant ? enchant->aura_id : 0);
+    }
+
+    return true;
+}
+
 void Player::ToggleAFK()
 {
     ToggleFlag(PLAYER_FLAGS, PLAYER_FLAGS_AFK);

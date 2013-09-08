@@ -3026,3 +3026,24 @@ Transmogrification.AllowMixedWeaponTypes = 0
 ###################################################################################################
 CrossfactionBG.enable = 1
 ###################################################################################################
+
+###################################################################################################
+# CUSTOM CHARACTER LOGIN SCREEN OPTIONS
+#
+#    Recommended.Faction.Enable
+#        Description: On first account login, adds a fake character representing a faction side
+#        Default:     0 - (disable)
+#                     1 - (Enable)
+
+Recommended.Faction.Enable = 1
+
+#
+#    Recommended.Faction.Side
+#        Description: Recommended faction to represent
+#        Default:     1 - (alliance)
+#                     2 - (horde)
+
+Recommended.Faction.Side = 1
+
+#
+###################################################################################################

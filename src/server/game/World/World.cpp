@@ -1250,6 +1250,10 @@ void World::LoadConfigSettings(bool reload)
 
     m_int_configs[CONFIG_PACKET_SPOOF_BANDURATION] = sConfigMgr->GetIntDefault("PacketSpoof.BanDuration", 86400);
 
+    // Custom Recommended faction
+    m_bool_configs[CONFIG_RECOMMENDED_FACTION_ENABLE] = sConfigMgr->GetBoolDefault("Recommended.Faction.Enable", true); // 1 true | 0 false
+    m_int_configs[CONFIG_RECOMMENDED_FACTION_SIDE] = sConfigMgr->GetIntDefault("Recommended.Faction.Side", 1); // 1 alliance | 2 horde
+
     // call ScriptMgr if we're reloading the configuration
     if (reload)
         sScriptMgr->OnConfigLoad(reload);

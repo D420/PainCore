@@ -235,6 +235,17 @@ void WorldSession::HandleCharEnum(PreparedQueryResult result)
         }
         while (result->NextRow());
     }
+    else
+    {
+        if (sWorld->getBoolConfig(CONFIG_RECOMMENDED_FACTION_ENABLE) && sWorld->getIntConfig(CONFIG_RECOMMENDED_FACTION_SIDE))
+        {
+            if (Player::CreateFakeCharacter(&data))
+            {
+                _legitCharacters.insert(0);
+                ++num;
+            }
+        }
+    }
 
     data.put<uint8>(0, num);
 
