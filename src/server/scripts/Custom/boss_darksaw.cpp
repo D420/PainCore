@@ -1,50 +1,50 @@
 #include "ScriptPCH.h"
 
 #define SPELL_ICE_ARMOR                         36881
-#define SPELL_LIGHTNING_BOLT        548
-#define SPELL_BLISTERING_COLD       71049
+#define SPELL_LIGHTNING_BOLT                    548
+#define SPELL_BLISTERING_COLD                   71049
 #define SPELL_DARKWINTER                        74275
 #define SPELL_SHADOW_SPIKE                      46589
-#define SPELL_BERSERK               45078
+#define SPELL_BERSERK                           45078
 #define SPELL_SINBEAM                           40827
-#define SPELL_SOULSTORM             68872
-#define SPELL_SOULSTORM_CHANNEL     69008
-#define SPELL_SOULSTORM_VISUAL      68870
-#define SPELL_FEAR                                      68950
+#define SPELL_SOULSTORM                         68872
+#define SPELL_SOULSTORM_CHANNEL                 69008
+#define SPELL_SOULSTORM_VISUAL                  68870
+#define SPELL_FEAR                              68950
 #define SPELL_FROST_BEACON                      70126
-#define SPELL_FRENZY                8269
-#define SPELL_WHITEOUT                          72034   // 30 % Debuff
+#define SPELL_FRENZY                            8269
+#define SPELL_WHITEOUT                          72034   // Debuff 30%
 #define SPELL_FROZEN_MALLET                     71993
-#define SPELL_CHAIN_LIGHTNING           33665
+#define SPELL_CHAIN_LIGHTNING                   33665
 #define SPELL_HARVEST_SOUL                      68980
-#define SPELL_FURY_ANTICHEAT            72350
+#define SPELL_FURY_ANTICHEAT                    72350
 #define SPELL_RAISE_DEAD                        71769
 #define SPELL_DRAIN_MANA                        5138
 #define SPELL_BLIZZARD                          26607
-#define SPELL_JUMP_TO_TARGET            64430
-#define DEATH_GRIP                                      64431
+#define SPELL_JUMP_TO_TARGET                    64430
+#define DEATH_GRIP                              64431
 #define MIRROR_IMAGE                            55342
-#define MIRROR_IMAGE_PREEFFECT          8677
+#define MIRROR_IMAGE_PREEFFECT                  8677
 #define MIRROR_IMAGE_TIMER                      180000
 // Orb spell info
-#define SPELL_ORB_FLARE_PASSIVE         30234
+#define SPELL_ORB_FLARE_PASSIVE                 30234
  
 enum Events
 {      
         // Global Events:
-        EVENT_WHITEOUT              = 1,
+        EVENT_WHITEOUT                          = 1,
         EVENT_BERSERK                           = 2,
         EVENT_BLISTER                           = 3,
        
         // Phase 1
         EVENT_SHADOW_SPIKE                      = 4,
         EVENT_SOULSTORM                         = 5,
-        EVENT_FEAR                                      = 6,
+        EVENT_FEAR                              = 6,
         EVENT_FRENZY                            = 7,
-        EVENT_CHAIN_LIGHTNING           = 8,
+        EVENT_CHAIN_LIGHTNING                   = 8,
  
         // Phase 2
-        EVENT_BLISTERING_COLD           = 9,
+        EVENT_BLISTERING_COLD                   = 9,
         EVENT_DRAIN_MANA                        = 10,
         EVENT_FROZEN_ORB                        = 11,
         EVENT_SINBEAM                           = 12,
@@ -52,18 +52,18 @@ enum Events
  
         // Common Events:
         EVENT_RANDOM_CHAT                       = 14,
-        EVENT_INTRO                                     = 15,
+        EVENT_INTRO                             = 15,
         EVENT_COMBAT                            = 16,
         EVENT_INTROB                            = 17,
         EVENT_INTROC                            = 18,
         EVENT_PAYBACK                           = 19,
         EVENT_HARVEST_SOUL                      = 20,
         EVENT_REVIVE                            = 21,
-        EVENT_PLAYSOUND_CAST1A          = 22,
-        EVENT_PLAYSOUND_CAST1B          = 23,
+        EVENT_PLAYSOUND_CAST1A                  = 22,
+        EVENT_PLAYSOUND_CAST1B                  = 23,
         EVENT_SOULFRAGMENT                      = 24,
         EVENT_MIRROR_IMAGE                      = 25,
-        EVENT_MIRROR_IMAGE_MAINSPELL= 26,
+        EVENT_MIRROR_IMAGE_MAINSPELL            = 26,
         EVENT_GHOSTLY                           = 27,
 };
  
@@ -71,8 +71,8 @@ enum Events
 enum Phases
 {
         PHASE_NONE      = 1,
-    PHASE_ONE   = 2,
-    PHASE_TWO   = 3,
+        PHASE_ONE       = 2,
+        PHASE_TWO       = 3,
         PHASE_OWNED     = 4,
         PHASE_OUTRO     = 5,
 };
@@ -84,7 +84,7 @@ enum Texts
     SAY_LK_INTRO_1                  = 0,
     SAY_LK_INTRO_2                  = 1,
     SAY_LK_INTRO_3                  = 2,
-        SAY_LK_AGGRO                                    = 3,
+     SAY_LK_AGGRO                   = 3,
     SAY_LK_REMORSELESS_WINTER       = 4,
     SAY_LK_QUAKE                    = 5,
     SAY_LK_SUMMON_VALKYR            = 6,
@@ -118,7 +118,7 @@ enum MiscData
 enum AuraSpells
 {
         AURA_TWISTER                            = 13913,
-        AURA_SHADOW                                     = 16592,
+        AURA_SHADOW                             = 16592,
         AURA_REFLECTION                         = 10831,
         AURA_SOULFRAGMENT                       = 71905,
         AURA_GHOSTLY                            = 16713,
@@ -139,7 +139,7 @@ bool _soulstormed;
 bool _frenzied;
 bool _berserking;       // The scripting for this is not compltete yet so I recommend nog using the according phase yet or write it yourself it is not hard.
 bool _reflectdmg;       // Same --^
-bool _has_orb_adds              = false;
+bool _has_orb_adds       = false;
 bool _playerscheating   = false;
  
 int _current_orbs;
@@ -297,7 +297,7 @@ class boss_darksaw : public CreatureScript
                         }
                         if (victim && victim->GetCreatureType() == CREATURE_TYPE_HUMANOID) //GetTypeId() == TYPEID_PLAYER && me->IsValidAttackTarget(victim))
                         {
-                                me->MonsterSay("Haha lol, you suck, ",LANG_UNIVERSAL,NULL);
+                                // me->MonsterSay("Haha lol, you suck, ",LANG_UNIVERSAL,NULL);
                                 if (RAND(1,2) == 1) Talk(RAND(SAY_LK_FROSTMOURNE_KILL, SAY_LK_HARVEST_SOUL, SAY_LK_KILL)); // 50 % Kans dat er een opmerking komt.
                                 _chatter_timer = 0;
                         }
@@ -364,20 +364,20 @@ class boss_darksaw : public CreatureScript
                                 {      
                                         // CasterSounds:
                                         case EVENT_PLAYSOUND_CAST1A:
-                                                t = RAND(14803, 14771, 14751);
-                                                if (t==14803) { me->MonsterYell("Touching..",LANG_UNIVERSAL,NULL); }
-                                                if (t==14771) { me->MonsterYell("No mercy..",LANG_UNIVERSAL,NULL); }
-                                                if (t==14751) { me->MonsterYell("Your army..",LANG_UNIVERSAL,NULL); }
+                                                // t = RAND(14803, 14771, 14751);
+                                                // if (t==14803) { me->MonsterYell("Touching..",LANG_UNIVERSAL,NULL); }
+                                                // if (t==14771) { me->MonsterYell("No mercy..",LANG_UNIVERSAL,NULL); }
+                                                // if (t==14751) { me->MonsterYell("Your army..",LANG_UNIVERSAL,NULL); }
                                                 events.ScheduleEvent(EVENT_PLAYSOUND_CAST1B, 2500);
                                                 me->SendPlaySound(t, false); // Touchy.. / No Mercy. / Your.. Army..
                                         _chatter_timer = 0;
                                         break;
                                         case EVENT_PLAYSOUND_CAST1B:
                                         _chatter_timer = 0;
-                                                t = RAND(14795, 14786, 14787);
-                                                if (t==14795) { me->MonsterYell("Where is your light now, crusaders?",LANG_UNIVERSAL,NULL); }
-                                                if (t==14786) { me->MonsterYell("Living or dead, you will server me.",LANG_UNIVERSAL,NULL); }
-                                                if (t==14787) { me->MonsterYell("Suffer, insects!",LANG_UNIVERSAL,NULL); }
+                                                //t = RAND(14795, 14786, 14787);
+                                                //if (t==14795) { me->MonsterYell("Where is your light now, crusaders?",LANG_UNIVERSAL,NULL); }
+                                                //if (t==14786) { me->MonsterYell("Living or dead, you will server me.",LANG_UNIVERSAL,NULL); }
+                                                //if (t==14787) { me->MonsterYell("Suffer, insects!",LANG_UNIVERSAL,NULL); }
                                                 me->SendPlaySound(t, false); // Where is your light now crusaders? / 14786 u will serve me ..
                                         _chatter_timer = 0;
                                         break;
@@ -442,19 +442,19 @@ class boss_darksaw : public CreatureScript
                                                                 14802,  // "Lay down your arms, and surrender your souls."
                                                                 14766); // "Be warned.."
  
-                                                                if (t==14738) { me->MonsterYell("You have crossed into the world of the dead in search of answers. You wish to save you ally, and have risked life and limb to be here. Allow me to help.",LANG_UNIVERSAL,NULL); }
-                                                                if (t==14745) { me->MonsterYell("But.. It is not yet your time to serve the Lich King. Yes, a greater destiny awaits you. Power.. You must become more powerful before you are to serve me.",LANG_UNIVERSAL,NULL); }
-                                                                if (t==14754) { me->MonsterYell("Fail me and it shall be your undoing..",LANG_UNIVERSAL,NULL); }
-                                                                if (t==14755) { me->MonsterYell("Succeed and even greater power shall be yours!",LANG_UNIVERSAL,NULL); }
+                                                                //if (t==14738) { me->MonsterYell("You have crossed into the world of the dead in search of answers. You wish to save you ally, and have risked life and limb to be here. Allow me to help.",LANG_UNIVERSAL,NULL); }
+                                                                //if (t==14745) { me->MonsterYell("But.. It is not yet your time to serve the Lich King. Yes, a greater destiny awaits you. Power.. You must become more powerful before you are to serve me.",LANG_UNIVERSAL,NULL); }
+                                                                //if (t==14754) { me->MonsterYell("Fail me and it shall be your undoing..",LANG_UNIVERSAL,NULL); }
+                                                                //if (t==14755) { me->MonsterYell("Succeed and even greater power shall be yours!",LANG_UNIVERSAL,NULL); }
                                                        
-                                                                if (t==14760) { me->MonsterYell(">:D",LANG_UNIVERSAL,NULL); }
+                                                                //if (t==14760) { me->MonsterYell(">:D",LANG_UNIVERSAL,NULL); }
                                                                 //if (t==14770) { me->MonsterYell("Very well.. warriors of the frozen wastes, rise up! I command you to fight, kill, and die for your master. Let none survive..",LANG_UNIVERSAL,NULL); }
-                                                                if (t==14773) { me->MonsterYell("Mercy is for the weak!",LANG_UNIVERSAL,NULL); }
-                                                                if (t==14792) { me->MonsterYell("Let the destruction of this place, serve as a lesson.. To all those who would dare oppose the scourge..",LANG_UNIVERSAL,NULL); }
+                                                                //if (t==14773) { me->MonsterYell("Mercy is for the weak!",LANG_UNIVERSAL,NULL); }
+                                                                //if (t==14792) { me->MonsterYell("Let the destruction of this place, serve as a lesson.. To all those who would dare oppose the scourge..",LANG_UNIVERSAL,NULL); }
                                                        
                                                                 //if (t==14799) { me->MonsterYell("Come to me, crusaders. I will remake you!",LANG_UNIVERSAL,NULL); }
-                                                                if (t==14802) { me->MonsterYell("Lay down your arms, and surrender your souls.",LANG_UNIVERSAL,NULL); }
-                                                                if (t==14766) { me->MonsterYell("Be warned..",LANG_UNIVERSAL,NULL); }
+                                                                //if (t==14802) { me->MonsterYell("Lay down your arms, and surrender your souls.",LANG_UNIVERSAL,NULL); }
+                                                                //if (t==14766) { me->MonsterYell("Be warned..",LANG_UNIVERSAL,NULL); }
  
                                                                 me->SendPlaySound(t, false); // Touchy.. / No Mercy. / Your.. Army..
                                                           _chatter_timer = 0;
@@ -605,10 +605,10 @@ class boss_darksaw : public CreatureScript
                                                 events.ScheduleEvent(EVENT_HARVEST_SOUL, urand(40000, 75000), 0, PHASE_TWO);
                                                 events.ScheduleEvent(EVENT_BLISTERING_COLD, 120000, 0, PHASE_TWO);
                                                
-                                                t = RAND(14808, 14800, 14787);
-                                                if (t==14808) { me->MonsterYell("APOCALYPSE!!!",LANG_UNIVERSAL,NULL); }
-                                                if (t==14800) { me->MonsterYell("Cower.. before my terrible creations..",LANG_UNIVERSAL,NULL); }
-                                                if (t==14787) { me->MonsterYell("Suffer, insects!",LANG_UNIVERSAL,NULL); }
+                                                //t = RAND(14808, 14800, 14787);
+                                                //if (t==14808) { me->MonsterYell("APOCALYPSE!!!",LANG_UNIVERSAL,NULL); }
+                                                //if (t==14800) { me->MonsterYell("Cower.. before my terrible creations..",LANG_UNIVERSAL,NULL); }
+                                                //if (t==14787) { me->MonsterYell("Suffer, insects!",LANG_UNIVERSAL,NULL); }
                                                 me->SendPlaySound(t, false); _chatter_timer = 0;
  
                                                 DoCast(me, SPELL_FRENZY, true);
