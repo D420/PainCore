@@ -204,13 +204,13 @@ public:
         case EQUIPMENT_SLOT_END+10: // Set info
             {
                 player->ADD_GOSSIP_ITEM(GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/Ability_Spy:30:30:-18:0|tVolver..", EQUIPMENT_SLOT_END+4, 0);
-                player->SEND_GOSSIP_MENU(sT->GetSetNpcText(), creature->GetGUID());
+                player->SEND_GOSSIP_MENU(50001, creature->GetGUID());
             } break;
 #endif
         case EQUIPMENT_SLOT_END+9: // Transmog info
             {
                 player->ADD_GOSSIP_ITEM(GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/Ability_Spy:30:30:-18:0|tVolver..", EQUIPMENT_SLOT_END+1, 0);
-                player->SEND_GOSSIP_MENU(sT->GetTransmogNpcText(), creature->GetGUID());
+                player->SEND_GOSSIP_MENU(50000, creature->GetGUID());
             } break;
         default: // Transmogrify
             {
