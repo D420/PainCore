@@ -17,7 +17,6 @@ set(scripts_STAT_SRCS
 	Custom/reset_all.cpp
 	Custom/PvPTitles.cpp
 	Custom/global_chat.cpp
-	Custom/boss_darksaw.cpp
 )
 
 message("  -> Prepared: Custom")
