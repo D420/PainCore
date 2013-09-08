@@ -155,7 +155,7 @@ void Player::FitPlayerInTeam(bool action, Battleground* pBattleGround)
     MorphFit(action);
 
     if (pBattleGround && action)
-        SendChatMessage("%sYou are playing for the %s%s in this %s", MSG_COLOR_WHITE, GetTeam() == ALLIANCE ? MSG_COLOR_DARKBLUE"alliance" : MSG_COLOR_RED"horde", MSG_COLOR_WHITE, pBattleGround->GetName());
+        SendChatMessage("%sJugar""\xC3\xA1""s en el bando de la %s%s en %s", MSG_COLOR_WHITE, GetTeam() == ALLIANCE ? MSG_COLOR_DARKBLUE"alianza" : MSG_COLOR_RED"horda", MSG_COLOR_WHITE, pBattleGround->GetName());
 }
 
 void Player::DoForgetPlayersInList()

@@ -46,49 +46,49 @@ class arena_spectator_commands : public CommandScript
             Player* player = handler->GetSession()->GetPlayer();
             if (target == player || target_guid == player->GetGUID())
             {
-                handler->PSendSysMessage("Can´t Spectate self.");
+                handler->PSendSysMessage("No puedes espectarte a ti mismo.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (player->IsInCombat())
             {
-                handler->PSendSysMessage("You are in Combat.");
+                handler->PSendSysMessage("No puedes hacer eso en combate.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (!target)
             {
-                handler->PSendSysMessage("Target Is not Exist.");
+                handler->PSendSysMessage("La persona a la que deseas espectar no existe.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 			
 			if (player->IsMounted())
             {
-                handler->PSendSysMessage("Cannot Spectate while mounted.");
+                handler->PSendSysMessage("No puedes hacer eso en montura.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }			
 
 			if (target && (target->HasAura(32728) || target->HasAura(32727))) // Check Arena Preparation thx XXsupr
             {
-                handler->PSendSysMessage("Cant do that. Arena didn`t started.");
+                handler->PSendSysMessage("No puedes hacer eso, la arena no ha empezado.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (player->GetPet())
             {
-                handler->PSendSysMessage("You must hide your pet.");
+                handler->PSendSysMessage("Debes retirar a tu mascota.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (player->GetMap()->IsBattlegroundOrArena() && !player->isSpectator())
             {
-                handler->PSendSysMessage("You are already on battleground or arena.");
+                handler->PSendSysMessage("No puedes hacer eso en un campo de batalla o en una arena.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -96,14 +96,14 @@ class arena_spectator_commands : public CommandScript
             Map* cMap = target->GetMap();
             if (!cMap->IsBattleArena())
             {
-                handler->PSendSysMessage("Player didnt found in arena.");
+                handler->PSendSysMessage("Jugador no encontrado en la arena.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (player->GetMap()->IsBattleground())
             {
-                handler->PSendSysMessage("Cant do that while you are on battleground.");
+                handler->PSendSysMessage("No puedes hacer eso en un campo de batalla.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -117,7 +117,7 @@ class arena_spectator_commands : public CommandScript
 
             if (target->isSpectator())
             {
-                handler->PSendSysMessage("Can`t do that. Your target is spectator.");
+                handler->PSendSysMessage("No puedes hacer eso, tu objetivo es un espectador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -164,8 +164,8 @@ class arena_spectator_commands : public CommandScript
                     ArenaTeam *secondTeam = sArenaTeamMgr->GetArenaTeamById(secondTeamID);
                     if (firstTeam && secondTeam)
                     {
-                        handler->PSendSysMessage("You entered to rated arena.");
-                        handler->PSendSysMessage("Teams:");
+                        handler->PSendSysMessage("Has entrado en una arena puntuada.");
+                        handler->PSendSysMessage("Equipos:");
                         handler->PSendSysMessage("%s - %s", firstTeam->GetName().c_str(), secondTeam->GetName().c_str());
                         handler->PSendSysMessage("%u(%u) - %u(%u)", firstTeam->GetRating(), firstTeam->GetAverageMMR(firstTeamMember->GetGroup()),
                                                                     secondTeam->GetRating(), secondTeam->GetAverageMMR(secondTeamMember->GetGroup()));
@@ -191,7 +191,7 @@ class arena_spectator_commands : public CommandScript
 
             if (!player->isSpectator())
             {
-                handler->PSendSysMessage("You are not spectator.");
+                handler->PSendSysMessage("No eres un espectador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -215,28 +215,28 @@ class arena_spectator_commands : public CommandScript
 
             if (!target)
             {
-                handler->PSendSysMessage("Cant find player.");
+                handler->PSendSysMessage("No se puede encontrar al jugador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (!player->isSpectator())
             {
-                handler->PSendSysMessage("You are not spectator, spectate someone first.");
+                handler->PSendSysMessage("No eres un espectador, debes espectar a alguien primero.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (target->isSpectator() && target != player)
             {
-                handler->PSendSysMessage("Can`t do that. Your target is spectator.");
+                handler->PSendSysMessage("No puedes hacer eso, tu objetivo es un espectador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (player->GetMap() != target->GetMap())
             {
-                handler->PSendSysMessage("Cant do that. Different arenas?");
+                handler->PSendSysMessage("No puedes hacer eso.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -245,7 +245,7 @@ class arena_spectator_commands : public CommandScript
             // if exists than battle didn`t begin
             if (target->HasAura(32728) || target->HasAura(32727))
             {
-                handler->PSendSysMessage("Cant do that. Arena didn`t started.");
+                handler->PSendSysMessage("No puedes hacer eso, la arena no ha empezado.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -261,14 +261,14 @@ class arena_spectator_commands : public CommandScript
 
             if (!player)
             {
-                handler->PSendSysMessage("Cant find player.");
+                handler->PSendSysMessage("No se puede encontrar al jugador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (!player->isSpectator())
             {
-                handler->PSendSysMessage("You are not spectator!");
+                handler->PSendSysMessage("No eres un espectador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -354,8 +354,8 @@ class npc_arena_spectator : public CreatureScript
 
         bool OnGossipHello(Player* pPlayer, Creature* pCreature)
         {
-			pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Games: 2100+mmr", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_TOP_GAMES);
-			pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Games: 1000+mmr", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES);
+			pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Arenas: 2100+ Rating", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_TOP_GAMES);
+			pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Arenas: 1000+ Rating", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES);
             pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetGUID());
             return true;
         }
@@ -394,16 +394,16 @@ class npc_arena_spectator : public CreatureScript
             std::string sClass = "";
             switch (id)
             {
-                case CLASS_WARRIOR:         sClass = "Warrior ";        break;
-                case CLASS_PALADIN:         sClass = "Pala ";           break;
-                case CLASS_HUNTER:          sClass = "Hunt ";           break;
-                case CLASS_ROGUE:           sClass = "Rogue ";          break;
-                case CLASS_PRIEST:          sClass = "Priest ";         break;
-                case CLASS_DEATH_KNIGHT:    sClass = "D.K. ";             break;
-                case CLASS_SHAMAN:          sClass = "Shama ";          break;
-                case CLASS_MAGE:            sClass = "Mage ";           break;
-                case CLASS_WARLOCK:         sClass = "Warlock ";        break;
-                case CLASS_DRUID:           sClass = "Druid ";          break;
+                case CLASS_WARRIOR:         sClass = "Guerrero ";        break;
+                case CLASS_PALADIN:         sClass = "Palad""\xC3\xAD""n ";           break;
+                case CLASS_HUNTER:          sClass = "Cazador ";           break;
+                case CLASS_ROGUE:           sClass = "P""\xC3\xAD""caro ";          break;
+                case CLASS_PRIEST:          sClass = "Sacerdote ";         break;
+                case CLASS_DEATH_KNIGHT:    sClass = "DK ";             break;
+                case CLASS_SHAMAN:          sClass = "Cham""\xC3\xA1""n ";          break;
+                case CLASS_MAGE:            sClass = "Mago ";           break;
+                case CLASS_WARLOCK:         sClass = "Brujo ";        break;
+                case CLASS_DRUID:           sClass = "Druida ";          break;
             }
             return sClass;
         }
@@ -490,10 +490,10 @@ class npc_arena_spectator : public CreatureScript
             }
 
             if (page > 0)
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_DOT, "Prev..", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES + page - 1);
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_DOT, "Anterior..", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES + page - 1);
 
             if (haveNextPage)
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_DOT, "Next..", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES + page + 1);
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_DOT, "Siguiente..", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES + page + 1);
         }
 };
 

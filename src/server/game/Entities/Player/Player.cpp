@@ -2089,7 +2089,7 @@ bool Player::CreateFakeCharacter(WorldPacket* data)
     {
     case 1: // alliance
     {
-        charName = "Alliance Recommended";
+        charName = "Alianza Recomendada";
         charRace = 4;                // race   : night elf
         charClass = 1;               // class  : warrior
         charGender = 1;              // gender : female
@@ -2100,7 +2100,7 @@ bool Player::CreateFakeCharacter(WorldPacket* data)
     break;
     case 2:
     {
-        charName = "Horde Recommended";
+        charName = "Horda Recomendada";
         charRace = 10;               // race   : blood elf
         charClass = 4;               // class  : rogue
         charGender = 1;              // gender : female
