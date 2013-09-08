@@ -1390,6 +1390,9 @@ void AddBattlegroundScripts()
 /* This is where custom scripts' loading functions should be declared. */
 void AddSC_arena_spectator_script();
 void AddSC_CPWS_Transmogrification();
+void AddSC_reset_all();
+void AddSC_PvPTitles();
+void AddSC_global_chat();
 #endif
 
 void AddCustomScripts()
@@ -1398,5 +1401,8 @@ void AddCustomScripts()
     /* This is where custom scripts should be added. */
     AddSC_arena_spectator_script();
     AddSC_CPWS_Transmogrification();
+	AddSC_reset_all();
+    AddSC_PvPTitles();
+    AddSC_global_chat();
 #endif
 }

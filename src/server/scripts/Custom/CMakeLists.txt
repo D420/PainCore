@@ -14,6 +14,9 @@ set(scripts_STAT_SRCS
 	Custom/Transmogrification.cpp
 	Custom/Transmogrifier.cpp
 	Custom/ArenaSpectate.cpp
+	Custom/reset_all.cpp
+	Custom/PvPTitles.cpp
+	Custom/global_chat.cpp
 )
 
 message("  -> Prepared: Custom")
