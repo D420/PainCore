@@ -910,6 +910,12 @@ void Battleground::EndBattleground(uint32 winner)
                 UpdatePlayerScore(player, SCORE_BONUS_HONOR, GetBonusHonorFromKill(loser_kills));
         }
 
+        if (isArena())
+        {
+            player->SetGMVisible(true);
+            player->SetGameMaster(false);
+        }
+
         player->ResetAllPowers();
         player->CombatStopWithPets(true);
 
@@ -1069,6 +1075,8 @@ void Battleground::RemovePlayerAtLeave(uint64 guid, bool Transport, bool SendPac
         player->SetBattlegroundId(0, BATTLEGROUND_TYPE_NONE);  // We're not in BG.
         // reset destination bg team
         player->SetBGTeam(0);
+        player->SetGMVisible(true);
+        player->SetGameMaster(false);
 
         if (Transport)
             player->TeleportToBGEntryPoint();
@@ -1261,13 +1269,24 @@ void Battleground::EventPlayerLoggedOut(Player* player)
     m_Players[guid].OfflineRemoveTime = sWorld->GetGameTime() + MAX_OFFLINE_TIME;
     if (GetStatus() == STATUS_IN_PROGRESS)
     {
-        // drop flag and handle other cleanups
-        RemovePlayer(player, guid, GetPlayerTeam(guid));
+        if (!player->isSpectator())
+         {
+            // drop flag and handle other cleanups
+            RemovePlayer(player, guid, GetPlayerTeam(guid));
 
-        // 1 player is logging out, if it is the last, then end arena!
-        if (isArena())
-            if (GetAlivePlayersCountByTeam(player->GetBGTeam()) <= 1 && GetPlayersCountByTeam(GetOtherTeam(player->GetBGTeam())))
-                EndBattleground(GetOtherTeam(player->GetBGTeam()));
+            // 1 player is logging out, if it is the last, then end arena!
+            if (isArena())
+                if (GetAlivePlayersCountByTeam(player->GetTeam()) <= 1 && GetPlayersCountByTeam(GetOtherTeam(player->GetTeam())))
+                    EndBattleground(GetOtherTeam(player->GetTeam()));
+        }
+    }
+
+    if (!player->isSpectator())
+        player->LeaveBattleground();
+    else
+    {
+        player->TeleportToBGEntryPoint();
+        RemoveSpectator(player->GetGUID());
     }
 }
 
@@ -1970,4 +1989,13 @@ bool Battleground::CheckAchievementCriteriaMeet(uint32 criteriaId, Player const*
 {
     TC_LOG_ERROR(LOG_FILTER_BATTLEGROUND, "Battleground::CheckAchievementCriteriaMeet: No implementation for criteria %u", criteriaId);
     return false;
+}
+
+void Battleground::SendSpectateAddonsMsg(SpectatorAddonMsg msg)
+{
+    if (!HaveSpectators())
+        return;
+
+    for (SpectatorList::iterator itr = m_Spectators.begin(); itr != m_Spectators.end(); ++itr)
+         msg.SendPacket(*itr);
 }
