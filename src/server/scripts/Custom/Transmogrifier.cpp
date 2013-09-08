@@ -33,7 +33,7 @@ public:
     {
         WorldSession* session = player->GetSession();
         if (sT->GetEnableTransmogInfo())
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/INV_Misc_Book_11:30:30:-18:0|tOpcion por desarrollar", EQUIPMENT_SLOT_END+9, 0);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/INV_Misc_Book_11:30:30:-18:0|tOpcion por desarrollar 1", EQUIPMENT_SLOT_END+9, 0);
         for (uint8 slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_END; ++slot)
         {
             if (const char* slotName = sT->GetSlotName(slot, session))
@@ -203,14 +203,12 @@ public:
             } break;
         case EQUIPMENT_SLOT_END+10: // Set info
             {
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/Ability_Spy:30:30:-18:0|tVolver..", EQUIPMENT_SLOT_END+4, 0);
-                player->SEND_GOSSIP_MENU(50001, creature->GetGUID());
+                player->GetSession()->SendAreaTriggerMessage("Mensaje temporal.");
             } break;
 #endif
         case EQUIPMENT_SLOT_END+9: // Transmog info
             {
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/Ability_Spy:30:30:-18:0|tVolver..", EQUIPMENT_SLOT_END+1, 0);
-                player->SEND_GOSSIP_MENU(50000, creature->GetGUID());
+                player->GetSession()->SendAreaTriggerMessage("Mensaje temporal.");
             } break;
         default: // Transmogrify
             {
