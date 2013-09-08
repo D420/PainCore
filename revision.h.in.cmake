@@ -1,7 +1,7 @@
 #ifndef __REVISION_H__
 #define __REVISION_H__
- #define _HASH                      "@rev_hash@"
- #define _DATE                      "@rev_date@"
+ #define _HASH                      "0.0.1"
+ #define _DATE                      "08/09/2013"
  #define _BRANCH                    "@rev_branch@"
  #define VER_COMPANYNAME_STR        "TrinityCore Developers"
  #define VER_LEGALCOPYRIGHT_STR     "(c)2008-2013 TrinityCore"
