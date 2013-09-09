@@ -18,6 +18,8 @@ set(scripts_STAT_SRCS
 	Custom/PvPTitles.cpp
 	Custom/global_chat.cpp
 	Custom/anuncio_gm.cpp
+	Custom/Npc_skill.cpp
+	Custom/npc_buff.cpp
 )
 
 message("  -> Prepared: Custom")

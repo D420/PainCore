@@ -1394,6 +1394,8 @@ void AddSC_reset_all();
 void AddSC_PvPTitles();
 void AddSC_global_chat();
 void AddSC_gm_login();
+void AddSC_Npc_skill();
+void AddSC_npc_buff();
 #endif
 
 void AddCustomScripts()
@@ -1406,5 +1408,7 @@ void AddCustomScripts()
     AddSC_PvPTitles();
     AddSC_global_chat();
 	AddSC_gm_login();
+	AddSC_Npc_skill();
+	AddSC_npc_buff();
 #endif
 }
